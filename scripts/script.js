@@ -17,3 +17,17 @@ var searchedCities = [];
           localStorage.setItem("searchedCities", JSON.stringify(searchedCities));
         }
       };
+
+        // Call the function
+        generateList();
+
+        var createList = function() {
+          citiesList.empty();
+          for (i = 0; i < searchedCities.length; i++) {
+            citiesList.append(
+              `<li class="list-group-item searched-Cities" id="${searchedCities[i]}">${searchedCities[i]}</li>`
+            );
+          }
+        };
+        
+        createList();
