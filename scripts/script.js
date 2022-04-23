@@ -8,29 +8,30 @@ var forecastDay = $("#forecast-div");
 var input = $("#form-input"); 
 var searchedCities = [];
 
-      // Function to create the recently searched cities list
-      const generateList = function() {
-        searchedCities = JSON.parse(localStorage.getItem("searchedCities"));  
-        }
-
-        else {
-          localStorage.setItem("searchedCities", JSON.stringify(searchedCities));
-        }
-      };
-
-        // Call the function
-        generateList();
-
-        var createList = function() {
-          citiesList.empty();
-          for (i = 0; i < searchedCities.length; i++) {
-            citiesList.append(
-              `<li class="list-group-item searched-Cities" id="${searchedCities[i]}">${searchedCities[i]}</li>`
-            );
-          }
-        };
+        // Function to create the recently searched cities list
+        const generateList = function() {
         
-        createList();
+          if (localStorage.getItem("searchedCities")) {
+            searchedCities = JSON.parse(localStorage.getItem("searchedCities"));  
+            }
+            else {
+              localStorage.setItem("searchedCities", JSON.stringify(searchedCities));
+            }
+          };
+    
+          // Call the function
+          generateList();
+    
+          var createList = function() {
+            citiesList.empty();
+            for (i = 0; i < searchedCities.length; i++) {
+              citiesList.append(
+                `<li class="list-group-item searched-Cities" id="${searchedCities[i]}">${searchedCities[i]}</li>`
+              );
+            }
+          };
+          
+          createList();
 
         //OnClick event for search button
         searchButton.on("click", function(event) {
@@ -81,7 +82,7 @@ var searchedCities = [];
    
     var queryURL2 = "https://api.openweathermap.org/data/2.5/weather?q="+cityText+"&units=metric&uvi?&appid=95d304ea9130c998e905d74bc71292d7";
       
-      // Performing an AJAX request with the queryURL2
+      // Performing AJAX request
       $.ajax({
         url: queryURL2,
         method: "GET",
@@ -89,7 +90,6 @@ var searchedCities = [];
         dataType: 'jsonp'
       })
 
-        // After data comes back from the request
         .then(function(response) {
         var cityWeather = JSON.stringify(response);
             
